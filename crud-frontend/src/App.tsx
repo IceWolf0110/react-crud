@@ -1,11 +1,10 @@
-import {ThemeProvider} from "@/components/dark-mode/theme-provider.tsx";
-import Products from "@/components/products/products.tsx";
+import Products from "@/pages/products.tsx";
 
 function App() {
     return (
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <>
             <Products/>
-        </ThemeProvider>
+        </>
     )
 }
 

@@ -1,7 +1,7 @@
-import {useEffect, useState} from "react"
-import axiosClient from "@/lib/axios-client"
+import {type ChangeEvent, useEffect, useState} from "react"
+import axiosClient from "@/lib/axios-client.ts"
 
-import {Button} from "@/components/ui/button"
+import {Button} from "@/components/ui/button.tsx"
 
 import {
     DropdownMenu,
@@ -9,7 +9,7 @@ import {
     DropdownMenuItem,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu.tsx"
 
 import {
     AlertDialog,
@@ -20,7 +20,7 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle, AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from "@/components/ui/alert-dialog.tsx"
 
 import {
     Table,
@@ -29,22 +29,21 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table.tsx"
 
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
-    DialogFooter,
-} from "@/components/ui/dialog"
+    DialogFooter, DialogDescription,
+} from "@/components/ui/dialog.tsx"
 
-import {Input} from "@/components/ui/input"
-import {Label} from "@/components/ui/label"
+import {Input} from "@/components/ui/input.tsx"
+import {Label} from "@/components/ui/label.tsx"
 
 import {Settings2Icon} from "lucide-react"
 import {ModeToggle} from "@/components/dark-mode/mode-toggle.tsx";
-import * as React from "react";
 
 interface Product {
     id: number
@@ -59,7 +58,7 @@ export default function Products() {
     const [products, setProducts] = useState<Product[]>([])
 
     useEffect(() => {
-        const fetchProducts = async () => {
+        const getProducts = async () => {
             try {
                 const response = await axiosClient.get("/products")
                 setProducts(response.data)
@@ -68,7 +67,7 @@ export default function Products() {
             }
         }
 
-        void fetchProducts()
+        void getProducts()
     }, [])
 
     const handleDelete = async (id: number) => {
@@ -95,7 +94,7 @@ export default function Products() {
     })
 
     const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>
+        e: ChangeEvent<HTMLInputElement>
     ) => {
         setFormData({
             ...formData,
@@ -138,7 +137,7 @@ export default function Products() {
     })
 
     const handleEditChange = (
-        e: React.ChangeEvent<HTMLInputElement>
+        e: ChangeEvent<HTMLInputElement>
     ) => {
         setEditForm({
             ...editForm,
@@ -173,7 +172,7 @@ export default function Products() {
     }
 
     return (
-        <div className="container mx-auto py-6">
+        <div className="container mx-auto py-6 px-3 md:px-0">
             <div className="flex justify-end gap-6">
                 <ModeToggle/>
                 <Button onClick={() => setOpenCreate(true)} className="border">Add Product</Button>
@@ -182,6 +181,7 @@ export default function Products() {
                     <DialogContent className="sm:max-w-md">
                         <DialogHeader>
                             <DialogTitle>Add Product</DialogTitle>
+                            <DialogDescription>Add new product</DialogDescription>
                         </DialogHeader>
 
                         <div className="grid gap-4 py-4">
@@ -346,6 +346,7 @@ export default function Products() {
                 <DialogContent className="sm:max-w-md">
                     <DialogHeader>
                         <DialogTitle>Edit Product</DialogTitle>
+                        <DialogDescription>Edit Product {editForm.name}</DialogDescription>
                     </DialogHeader>
 
                     <div className="grid gap-4 py-4">
